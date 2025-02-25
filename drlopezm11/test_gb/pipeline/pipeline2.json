@@ -21,8 +21,7 @@
 					},
 					"fieldList": [
 						"childItems",
-						"itemName",
-						"itemType"
+						"itemName"
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
@@ -68,9 +67,8 @@
 									"type": "DelimitedTextSource",
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
-										"filePath": "@concat(item().name)",
+										"filePath": "@concat('CodingChallenge/', item().name)",
 										"recursive": true,
-										"wildcardFolderPath": "CodingChallenge",
 										"wildcardFileName": {
 											"value": "@activity('Get File List').output.itemName",
 											"type": "Expression"
