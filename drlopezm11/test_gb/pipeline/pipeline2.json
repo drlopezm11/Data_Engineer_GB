@@ -69,6 +69,7 @@
 										"type": "AzureBlobStorageReadSettings",
 										"filePath": "@concat('CodingChallenge/', item().name)",
 										"recursive": true,
+										"wildcardFolderPath": "CodingChallenge",
 										"wildcardFileName": {
 											"value": "@activity('Get File List').output.itemName",
 											"type": "Expression"
