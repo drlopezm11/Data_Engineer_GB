@@ -20,7 +20,8 @@
 						"type": "DatasetReference"
 					},
 					"fieldList": [
-						"childItems"
+						"childItems",
+						"itemName"
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
@@ -33,7 +34,7 @@
 				}
 			},
 			{
-				"name": "Creat_Tables",
+				"name": "Create_Tables",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -71,7 +72,7 @@
 										"recursive": false,
 										"wildcardFolderPath": "CodingChallenge",
 										"wildcardFileName": {
-											"value": "@item()",
+											"value": "@activity('FilesMetadata').output.itemName",
 											"type": "Expression"
 										},
 										"enablePartitionDiscovery": false
