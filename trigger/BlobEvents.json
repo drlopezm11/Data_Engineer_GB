@@ -1,0 +1,24 @@
+{
+	"name": "BlobEvents",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "GlobantTest",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/inputfiles/blobs/CodingChallenge",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/69c79db2-ae51-4219-966a-6c9e95925392/resourceGroups/Globant_Test/providers/Microsoft.Storage/storageAccounts/blobcontainerglobant",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
