@@ -15,7 +15,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "TableName",
+				"fileName": {
+					"value": "@dataset().TableName",
+					"type": "Expression"
+				},
 				"folderPath": "CodingChallenge",
 				"container": "inputfiles"
 			},
