@@ -16,14 +16,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DelimitedText1",
+						"referenceName": "csv_blob",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
+						"childItems",
 						"itemName"
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -32,7 +34,7 @@
 				}
 			},
 			{
-				"name": "Creat_Tables",
+				"name": "Create_Tables",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -45,11 +47,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
+						"value": "@activity('FilesMetadata').output.childItems",
 						"type": "Expression"
 					},
 					"isSequential": false,
-					"batchCount": 0,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -69,8 +70,11 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": false,
-										"wildcardFolderPath": "@concat('<your-folder-path>/', item().name)",
-										"wildcardFileName": "@concat('<your-folder-path>/', item().name)",
+										"wildcardFolderPath": "CodingChallenge",
+										"wildcardFileName": {
+											"value": "@activity('FilesMetadata').output.itemName",
+											"type": "Expression"
+										},
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
@@ -81,7 +85,6 @@
 									"type": "AzureSqlSink",
 									"writeBehavior": "insert",
 									"sqlWriterUseTableLock": false,
-									"tableOption": "autoCreate",
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
