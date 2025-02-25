@@ -16,16 +16,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "csv_blob",
+						"referenceName": "DelimitedText1",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
-						"childItems",
 						"itemName"
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -34,7 +32,7 @@
 				}
 			},
 			{
-				"name": "Create_Tables",
+				"name": "Creat_Tables",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -47,10 +45,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('FilesMetadata').output.childItems",
+						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
 					"isSequential": false,
+					"batchCount": 0,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -70,11 +69,8 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": false,
-										"wildcardFolderPath": "CodingChallenge",
-										"wildcardFileName": {
-											"value": "@activity('FilesMetadata').output.itemName",
-											"type": "Expression"
-										},
+										"wildcardFolderPath": "@concat('<your-folder-path>/', item().name)",
+										"wildcardFileName": "@concat('<your-folder-path>/', item().name)",
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
@@ -85,6 +81,7 @@
 									"type": "AzureSqlSink",
 									"writeBehavior": "insert",
 									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
@@ -106,13 +103,7 @@
 							"outputs": [
 								{
 									"referenceName": "AzureSqlTable1",
-									"type": "DatasetReference",
-									"parameters": {
-										"tablename": {
-											"value": "@activity('FilesMetadata').output.itemName",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
